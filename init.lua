@@ -207,6 +207,10 @@ require('lazy').setup({
   },
 
   {
+    'ThePrimeagen/harpoon'
+  },
+
+  {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
@@ -322,9 +326,9 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- better clipboard usage
--- TODO: check if this is covered somewhere else
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]]) -- clipboard within vim
-vim.keymap.set("n", "<leader>Y", [["+Y]]) -- system clipboard
+-- atm we always sync see 'set' section
+-- vim.keymap.set({"n", "v"}, "<leader>y", [["+y]]) -- clipboard within vim
+-- vim.keymap.set("n", "<leader>Y", [["+Y]]) -- system clipboard
 
 -- ??
 vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
@@ -340,6 +344,22 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 -- replace the word that one is currently on
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
+-- [[ harpoon setup ]]
+--
+local mark = require("harpoon.mark")
+local ui = require("harpoon.ui")
+
+vim.keymap.set("n", "<leader>a", mark.add_file)
+vim.keymap.set("n", "<C-e>", ui.toggle_quick_menu)
+
+vim.keymap.set("n", "<C-,>", function() ui.nav_prev() end)
+vim.keymap.set("n", "<C-.>", function() ui.nav_next() end)
+vim.keymap.set("n", "<C-h>", function() ui.nav_file(1) end)
+vim.keymap.set("n", "<C-t>", function() ui.nav_file(2) end)
+vim.keymap.set("n", "<C-n>", function() ui.nav_file(3) end)
+vim.keymap.set("n", "<C-s>", function() ui.nav_file(4) end)
+
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
